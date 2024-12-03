@@ -1,0 +1,90 @@
+<div class="product-display">
+  <h1>{{ title }}</h1>
+
+  <!-- Add Product Form -->
+  <div class="add-product">
+    <h3>Add a New Product</h3>
+    <form (ngSubmit)="addProduct()" #productForm="ngForm">
+      <label>
+        Name:
+        <input
+          type="text"
+          [(ngModel)]="newProduct.name"
+          name="name"
+          required
+        />
+      </label>
+      <br />
+      <label>
+        Model:
+        <input
+          type="text"
+          [(ngModel)]="newProduct.model"
+          name="model"
+          required
+        />
+      </label>
+      <br />
+      <label>
+        Price:
+        <input
+          type="number"
+          [(ngModel)]="newProduct.price"
+          name="price"
+          required
+        />
+      </label>
+      <br />
+      <label>
+        Quantity:
+        <input
+          type="number"
+          [(ngModel)]="newProduct.Qty"
+          name="Qty"
+          required
+        />
+      </label>
+      <br />
+      <label>
+        Availability:
+        <select [(ngModel)]="newProduct.available" name="available" required>
+          <option [value]="true">In Stock</option>
+          <option [value]="false">Out of Stock</option>
+        </select>
+      </label>
+      <br />
+      <button type="submit" [disabled]="!productForm.valid">
+        Add Product
+      </button>
+    </form>
+  </div>
+
+  <!-- Product Table -->
+  <table border="1" cellspacing="0" cellpadding="5">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Model</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Availability</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let product of products"
+        [ngClass]="{ 'out-of-stock': !product.available }"
+      >
+        <td>{{ product.name }}</td>
+        <td>{{ product.model }}</td>
+        <td>{{ product.price | currency: 'INR' }}</td>
+        <td>{{ product.Qty }}</td>
+        <td>{{ product.available ? 'In Stock' : 'Out of Stock' }}</td>
+        <td>
+          <button (click)="logProductDetails(product)">View Details</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
